@@ -63,11 +63,11 @@ function EstablishmentCalendar(props: any) {
       </Frame.SubHeader>
 
       <div style={{ display: "flex", alignItems: "center" }}>
-        <BoxStyled variant={!dayList.days.includes(selectedDay) ? "blue" : "light"} onClick={( ) => handleChangeDay(false)}>
+        <BoxStyled $variant={!dayList.days.includes(selectedDay) ? "blue" : "light"} onClick={( ) => handleChangeDay(false)}>
           <span>Sim</span>
         </BoxStyled>
 
-        <BoxStyled variant={dayList.days.includes(selectedDay) ? "blue" : "light"} onClick={( ) => handleChangeDay(true)}>
+        <BoxStyled $variant={dayList.days.includes(selectedDay) ? "blue" : "light"} onClick={( ) => handleChangeDay(true)}>
           <span>Não</span>
         </BoxStyled>
       </div>

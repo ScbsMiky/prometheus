@@ -85,13 +85,13 @@ export default function ServicesScreen( ) {
         </Frame.SubHeader>
 
         <div style={{ display: "flex", alignItems: "center", flexWrap: "nowrap", overflow: "auto" }} className="categories">
-          <BoxStyled onClick={( ) => setSelectedCategory({ id: "all", name: "Todos" })} variant={selectedCategory.id == "all" ? "blue" : "light"} style={{ display: "flex", alignItems: "center", marginRight: "0" }}>
+          <BoxStyled onClick={( ) => setSelectedCategory({ id: "all", name: "Todos" })} $variant={selectedCategory.id == "all" ? "blue" : "light"} style={{ display: "flex", alignItems: "center", marginRight: "0" }}>
             <span>Todos</span>
           </BoxStyled>
 
           {categories.map((category) => {
             return (
-              <BoxStyled onClick={( ) => setSelectedCategory({ id: category.id, name: category.name })} key={category.id} variant={selectedCategory.id == category.id ? "blue" : "light"} style={{ display: "flex", alignItems: "center", marginRight: "0" }}>
+              <BoxStyled onClick={( ) => setSelectedCategory({ id: category.id, name: category.name })} key={category.id} $variant={selectedCategory.id == category.id ? "blue" : "light"} style={{ display: "flex", alignItems: "center", marginRight: "0" }}>
                 <span>{category.name}</span>
               </BoxStyled>
             );
@@ -100,7 +100,7 @@ export default function ServicesScreen( ) {
           {loadingCategories ? <div style={{ margin: ".5rem auto" }} className="spinner"><div></div></div> : <></>}
         </div>
         
-        <BoxStyled onClick={( ) => setBlurNewCategory(true)} variant="blue" center="true">
+        <BoxStyled onClick={( ) => setBlurNewCategory(true)} $variant="blue" $center="true">
           <span>Nova categoria</span>
           <svg style={{ marginLeft: ".5rem" }} fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
         </BoxStyled>
@@ -115,7 +115,7 @@ export default function ServicesScreen( ) {
         <div className="services">
           {services.map((service) => {
             return (
-              <BoxStyled onClick={( ) => setSelectedService(service)} key={service.id} full="true">
+              <BoxStyled onClick={( ) => setSelectedService(service)} key={service.id} $full="true">
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: ".35rem" }}>
                   <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{service.name}</span>
                   <svg style={{ minWidth: "1.2rem", minHeight: "1.2rem" }} viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
@@ -134,7 +134,7 @@ export default function ServicesScreen( ) {
           {loadingServices ? <div style={{ margin: ".5rem auto" }} className="spinner"><div></div></div> : <></>}
         </div>
         
-        <BoxStyled onClick={( ) => setBlurNewService(true)} variant="blue" center="true">
+        <BoxStyled onClick={( ) => setBlurNewService(true)} $variant="blue" $center="true">
           <span>Novo serviço</span>
           <svg style={{ marginLeft: ".5rem" }} fill="currentColor" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
         </BoxStyled>
@@ -145,7 +145,7 @@ export default function ServicesScreen( ) {
             
             <InputStyled placeholder="Nome" />
 
-            <BoxStyled onClick={handleNewCategory} variant="blue" full="true" center="true">
+            <BoxStyled onClick={handleNewCategory} $variant="blue" $full="true" $center="true">
               <span>Criar</span>
             </BoxStyled>
           </BoxStyled>
@@ -159,7 +159,7 @@ export default function ServicesScreen( ) {
             <InputStyled placeholder="Preço" />
             <InputStyled disabled value={selectedCategory.name} />
 
-            <BoxStyled onClick={handleNewService} variant="blue" full="true" center="true">
+            <BoxStyled onClick={handleNewService} $variant="blue" $full="true" $center="true">
               <span>Criar</span>
             </BoxStyled>
           </BoxStyled>
@@ -175,11 +175,11 @@ export default function ServicesScreen( ) {
                 <InputStyled placeholder="Preço" defaultValue={selectedService.price} />
                 <InputStyled disabled value={selectedCategory.name} />
 
-                <BoxStyled onClick={handleDeleteService} variant="red" full="true" center="true">
+                <BoxStyled onClick={handleDeleteService} $variant="red" $full="true" $center="true">
                   <span>Deletar</span>
                 </BoxStyled>
 
-                <BoxStyled onClick={handleChangeService} variant="blue" full="true" center="true">
+                <BoxStyled onClick={handleChangeService} $variant="blue" $full="true" $center="true">
                   <span>Alterar</span>
                 </BoxStyled>
               </BoxStyled>
