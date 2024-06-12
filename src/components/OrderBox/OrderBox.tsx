@@ -1,5 +1,4 @@
 import { IOrderBox } from "./types";
-import { BoxStyled } from "../../styles/box";
 import { getFormatedDateFromTimestamp } from "../Calendar/Calendar";
 import { OrderBoxStyled } from "./styles";
 

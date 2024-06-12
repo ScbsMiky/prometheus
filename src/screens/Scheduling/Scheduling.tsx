@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import useStorage from "../../hooks/useStorage";8
 import Blur from "../../components/Blur/Blur";
 import { SelectStyled } from "../../styles/select";
-import Calendar from "../../components/Calendar/Calendar";
 import { apiDomain, request } from "../../contexts/globalContext";
 import OrderBox from "../../components/OrderBox/OrderBox";
 

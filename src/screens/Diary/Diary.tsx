@@ -4,7 +4,6 @@ import Frame from "../../components/Frame/Frame";
 import Calendar from "../../components/Calendar/Calendar";
 import { BoxStyled } from "../../styles/box";
 import { useEffect, useState } from "react";
-import Blur from "../../components/Blur/Blur";
 import { InputStyled } from "../../styles/input";
 import { apiDomain, request } from "../../contexts/globalContext";
 
@@ -133,7 +132,7 @@ function EstablishmentTimes(props: any) {
 };
 
 export default function DiaryScreen( ) {
-  const [selectedDate, setSelectedDate] = useState(new Date( ));
+  const [selectedDate] = useState(new Date( ));
   
   const [calendar, setCalendar] = useState<any>(undefined);
   const [establishment, setEstablishment] = useState<any>(undefined);
