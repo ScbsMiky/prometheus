@@ -13,7 +13,7 @@ import DiaryScreen from "./screens/Diary/Diary";
 import OrdersScreen from "./screens/Orders/Orders";
 import ServicesScreen from "./screens/Services/Services";
 import SchedulingScreen from "./screens/Scheduling/Scheduling";
-import { apiDomain } from "./contexts/globalContext";
+import { apiDomain, request } from "./contexts/globalContext";
 import LoginScreen from "./screens/Login/Login";
 import SignupScreen from "./screens/Signup/Signup";
 
@@ -102,26 +102,25 @@ export default function App( ) {
       return;
     };
 
-    fetch(`${apiDomain}/api/custumer/auth`, {
+    request({
+      url: `${apiDomain}/api/custumer/auth`,
       method: "POST",
       headers: { token: token, uncrypted: true },
-    })
-      .then(res => res.json( ))
-      .then(({ error, custumer }) => {
-        setLoading(false);
+    }).then(({ error, custumer }) => {
+      setLoading(false);
+      
+      if(error) {
+        setAuthenticated(false);
         
-        if(error) {
-          setAuthenticated(false);
-          
-          return;
-        };
+        return;
+      };
 
-        window.localStorage.setItem("username", custumer.name);
-        window.localStorage.setItem("phone", custumer.private.phone);
+      window.localStorage.setItem("username", custumer.name);
+      window.localStorage.setItem("phone", custumer.private.phone);
 
-        setAuthenticated(true);
-        setAdmin(custumer.isAdmin);
-      });
+      setAuthenticated(true);
+      setAdmin(custumer.isAdmin);
+    });
   }, [ ]);
 
   return loading
