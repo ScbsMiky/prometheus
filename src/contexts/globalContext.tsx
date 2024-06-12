@@ -1,4 +1,4 @@
-export const apiDomain = "http://192.168.1.6:1010";
+export const apiDomain = "https://robust-misty-earl.glitch.me/";
 
 type RequestOptions = {
   url: string;
