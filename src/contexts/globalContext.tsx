@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 export const apiDomain = "http://192.168.1.6:1010";
 
 type RequestOptions = {
