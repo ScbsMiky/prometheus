@@ -51,7 +51,7 @@ export default function LoginScreen( ) {
 
         {errorMessage ? <span style={{ padding: ".5rem", display: "block", textAlign: "center", color: "#ff4444" }}>{errorMessage}</span> : <></>}
           
-        <BoxStyled onClick={handleSubmit} $full="true" $center="true" $variant="blue">
+        <BoxStyled onClick={handleSubmit} data-full="true" data-center="true" data-variant="blue">
           {loading ? <div className="spinner"><div style={{ padding: ".37rem" }}></div></div> : <span>Entrar</span>}
         </BoxStyled>
 
