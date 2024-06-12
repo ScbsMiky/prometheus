@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
+import { BoxStyledVariants } from "../../styles/box";
 
-export const OrderBoxStyled = styled.div`
+export const OrderBoxStyled = styled.div<{ ["data-variant"]?: BoxStyledVariants, ["data-center"]?: "true" | "false", ["data-full"]?: "true" | "false" }>`
   width: calc(100% - 1rem);
 
   margin: .5rem;
@@ -10,8 +11,8 @@ export const OrderBoxStyled = styled.div`
 
   box-shadow: 3px 3px 2px 1px #c4c4c4;
 
-  color: ${(props) => props.variant == "blue" ? props.theme.colors.whitePrimary : props.variant == "red" ? props.theme.colors.whitePrimary : props.theme.colors.blueTertiary};
-  background: ${(props) => props.variant == "blue" ? props.theme.colors.blueTertiary : props.variant == "red" ? "#ff4444" : props.theme.colors.whitePrimary};
+  color: ${(props) => props["data-variant"] == "blue" ? props.theme.colors.whitePrimary : props["data-variant"] == "red" ? props.theme.colors.whitePrimary : props.theme.colors.blueTertiary};
+  background: ${(props) => props["data-variant"] == "blue" ? props.theme.colors.blueTertiary : props["data-variant"] == "red" ? "#ff4444" : props.theme.colors.whitePrimary};
 
   .title {
     display: flex;
