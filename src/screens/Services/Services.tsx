@@ -27,7 +27,7 @@ export default function ServicesScreen( ) {
       url: `${apiDomain}/api/services/create`,
       body: { name: name.value, price: price.value, category: selectedCategory.id },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(( ) => window.location.reload( ));
+    }).then(( ) => window.location);
   };
 
   const handleChangeService = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
