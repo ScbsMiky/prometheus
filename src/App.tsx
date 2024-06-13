@@ -43,6 +43,8 @@ function Unauthenticated(props: { theme: string }) {
 
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/signup" element={<SignupScreen />} />
+            
+            <Route path="*" element={<Navigate to={"/"} />} />
           </Routes>
         </BrowserRouter>
       </AppStyled>
@@ -62,6 +64,8 @@ function Admin(props: { theme: string }) {
             <Route path="/diary" element={<DiaryScreen />} />
             <Route path="/services" element={<ServicesScreen />} />
             <Route path="/scheduling" element={<SchedulingScreen />} />
+            
+            <Route path="*" element={<Navigate to={"/"} />} />
           </Routes>
         </BrowserRouter>
       </AppStyled>
@@ -79,6 +83,8 @@ function Custumer(props: { theme: string }) {
           <Routes>
             <Route path="/" element={<Navigate to={"/schedule"} />} />
             <Route path="/schedule" element={<SchedulingScreen />} />
+            
+            <Route path="*" element={<Navigate to={"/"} />} />
           </Routes>
         </BrowserRouter>
       </AppStyled>
