@@ -7,7 +7,7 @@ export function FrameActions(props: { isCustumer?: boolean; selected?: FrameScre
   if(props.isCustumer) {
     return (
       <>
-        <Link to="/" className={`item-frame ${props.selected == "Order" ? "selected" : ""}`}>
+        <Link onClick={( ) => window.localStorage.removeItem("token")} to="/" className={`item-frame ${props.selected == "Order" ? "selected" : ""}`}>
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22" /></svg>
           <span>Desconectar-se</span>
         </Link>
@@ -30,6 +30,11 @@ export function FrameActions(props: { isCustumer?: boolean; selected?: FrameScre
       <Link to="/diary" className={`item-frame ${props.selected == "Diary" ? "selected" : ""}`}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg>
         <span>Agenda</span>
+      </Link>
+
+      <Link onClick={( ) => window.localStorage.removeItem("token")} to="/" className={`item-frame ${props.selected == "Order" ? "selected" : ""}`}>
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22" /></svg>
+        <span>Desconectar-se</span>
       </Link>
     </>
   );
