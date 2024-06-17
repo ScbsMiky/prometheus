@@ -4,7 +4,7 @@ import { OrderBoxStyled } from "./styles";
 
 export default function OrderBox(props: IOrderBox) {
   return (
-    <OrderBoxStyled>
+    <OrderBoxStyled onClick={props.onClick}>
       <div className="title">
         <span>{props.name}</span>
         <span>{getFormatedDateFromTimestamp(props.timestamp)}</span>

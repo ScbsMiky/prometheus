@@ -6,4 +6,6 @@ export type IOrderBox = {
 
   price: number;
   timestamp: number;
+
+  onClick?( ): void;
 };

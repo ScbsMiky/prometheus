@@ -8,6 +8,7 @@ import Blur from "../../components/Blur/Blur";
 import { SelectStyled } from "../../styles/select";
 import { apiDomain, request } from "../../contexts/globalContext";
 import OrderBox from "../../components/OrderBox/OrderBox";
+import { useNavigate } from "react-router-dom";
 
 export default function SchedulingScreen( ) {
   const [phone] = useStorage("phone", "");
@@ -31,17 +32,19 @@ export default function SchedulingScreen( ) {
 
   const [selectedDate, setSelectedDate] = useState(new Date( ));
 
+  const [selectedScheduling, setSelectedScheduling] = useState("");
+
+  const navigate = useNavigate();
+
   const handleSubmit = ( ) => {
     if(!selectedService) return;
-
-    console.log(selectedDate.toLocaleString( ), selectedDate.toISOString( ));
     
     request({
       url: `${apiDomain}/api/schedules/create`,
       method: "POST",
       body: { date: selectedDate.toISOString( ), type: selectedService },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(console.log);
+    }).then(( ) => navigate(0));
   };
 
   const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,8 +64,17 @@ export default function SchedulingScreen( ) {
 
     selectedDate.setHours(Number(hours));
     selectedDate.setMinutes(Number(minutes));
+  };
 
-    console.log(selectedDate.toLocaleString( ));
+  const handleRemoveSchedule = ( ) => {
+    if(!selectedScheduling) return;
+
+    request({
+      url: `${apiDomain}/api/schedules/delete`,
+      method: "POST",
+      body: { id: selectedScheduling },
+      headers: { token: window.localStorage.getItem("token") }
+    }).then(( ) => navigate(0));
   };
 
   useEffect(( ) => {
@@ -130,7 +142,7 @@ export default function SchedulingScreen( ) {
           loadingMySchedules
           ? <div className="spinner"><div></div></div>
           : <div className="orders">
-            {!mySchedules.length ? <div style={{ padding: ".5rem" }}><span>Sem agenda</span></div> : mySchedules.map((order) => <OrderBox {...order} key={order.id} />)}
+            {!mySchedules.length ? <div style={{ padding: ".5rem" }}><span>Sem agenda</span></div> : mySchedules.map((order) => <OrderBox onClick={( ) => setSelectedScheduling(order.id)} {...order} key={order.id} />)}
           </div>
         }
       </SchedulingStyled>
@@ -138,6 +150,16 @@ export default function SchedulingScreen( ) {
       <BoxStyled onClick={( ) => setNewSchedule(true)} style={{ padding: ".75rem" }} data-full="true" data-center="true" data-variant="blue">
         <span>Novo agendamento</span>
       </BoxStyled>
+
+      <Blur onClose={( ) => setSelectedScheduling("")} activated={!!selectedScheduling.length}>
+        <BoxStyled>
+          <span style={{ display: "block", marginBottom: ".5rem", textAlign: "center", fontWeight: "bold", fontSize: "1.2rem" }}>Desmarcar agendamento</span>
+
+          <BoxStyled onClick={handleRemoveSchedule} style={{ padding: ".75rem", margin: "0", width: "100%" }} data-full="true" data-center="true" data-variant="red">
+            <span>Confirmar</span>
+          </BoxStyled>
+        </BoxStyled>
+      </Blur>
 
       <Blur onClose={( ) => setNewSchedule(false)} activated={newSchedule}>
         <BoxStyled>
