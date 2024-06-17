@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 
-import { FrameStyled, SubHeaderStyled } from "./styles";
 import { FrameScreens, IFrame } from "./types";
+import { FrameStyled, SubHeaderStyled } from "./styles";
 
 export function FrameActions(props: { isCustumer?: boolean; selected?: FrameScreens }) {
   if(props.isCustumer) {
     return (
       <>
-        <Link to="/" className={`item-frame ${props.selected == "Order" ? "selected" : ""}`}>
-          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22" /></svg>
-          <span>Desconectar-se</span>
+        <Link to="/" onClick={( ) => window.localStorage.removeItem("token")} className={`item-frame`}>
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 7L15.59 8.41L18.17 11H8V13H18.17L15.59 15.58L17 17L22 12M4 5H12V3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H12V19H4V5Z" /></svg>
+          <span>Sair</span>
         </Link>
       </>
     );
@@ -30,6 +30,11 @@ export function FrameActions(props: { isCustumer?: boolean; selected?: FrameScre
       <Link to="/diary" className={`item-frame ${props.selected == "Diary" ? "selected" : ""}`}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg>
         <span>Agenda</span>
+      </Link>
+
+      <Link to="/" onClick={( ) => { window.localStorage.removeItem("token"); window.location.reload( ); }} className={`item-frame`}>
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 7L15.59 8.41L18.17 11H8V13H18.17L15.59 15.58L17 17L22 12M4 5H12V3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H12V19H4V5Z" /></svg>
+        <span>Sair</span>
       </Link>
     </>
   );

@@ -6,6 +6,7 @@ import { ServicesStyled } from "./styles";
 import { apiDomain, request } from "../../contexts/globalContext";
 import Blur from "../../components/Blur/Blur";
 import { InputStyled } from "../../styles/input";
+import { useNavigate } from "react-router-dom";
 
 export default function ServicesScreen( ) {
   const [selectedService, setSelectedService] = useState<any>(undefined);
@@ -20,6 +21,8 @@ export default function ServicesScreen( ) {
   const [services, setServices] = useState([ ] as any[ ]);
   const [categories, setCategories] = useState([ ] as any[ ]);
 
+  const navige = useNavigate();
+
   const handleNewService = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const [name, price] = event.currentTarget.parentElement?.querySelectorAll("input") || [];
 
@@ -27,7 +30,7 @@ export default function ServicesScreen( ) {
       url: `${apiDomain}/api/services/create`,
       body: { name: name.value, price: price.value, category: selectedCategory.id },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(( ) => window.location.reload( ));
+    }).then(( ) => navige(0));
   };
 
   const handleChangeService = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -37,7 +40,7 @@ export default function ServicesScreen( ) {
       url: `${apiDomain}/api/services/edit`,
       body: { id: selectedService.id, name: name.value, price: price.value, category: selectedCategory.id },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(( ) => window.location.reload( ));
+    }).then(( ) => navige(0));
   };
 
   const handleDeleteService = ( ) => {
@@ -45,7 +48,7 @@ export default function ServicesScreen( ) {
       url: `${apiDomain}/api/services/delete`,
       body: { id: selectedService.id },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(( ) => window.location.reload( ));
+    }).then(( ) => navige(0));
   };
 
   const handleNewCategory = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -55,7 +58,7 @@ export default function ServicesScreen( ) {
       url: `${apiDomain}/api/categories/create`,
       body: { name: name?.value },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(( ) => window.location.reload( ));
+    }).then(( ) => navige(0));
   };
 
   useEffect(( ) => {

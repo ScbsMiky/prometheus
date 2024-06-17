@@ -33,13 +33,36 @@ export default function SchedulingScreen( ) {
 
   const handleSubmit = ( ) => {
     if(!selectedService) return;
+
+    console.log(selectedDate.toLocaleString( ), selectedDate.toISOString( ));
     
     request({
       url: `${apiDomain}/api/schedules/create`,
       method: "POST",
-      body: { date: selectedDate, type: selectedService },
+      body: { date: selectedDate.toISOString( ), type: selectedService },
       headers: { token: window.localStorage.getItem("token") }
     }).then(console.log);
+  };
+
+  const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let [year, month, day] = event.target.value.split("-");
+    
+    if(year.length !== 4) [day, month, year];
+
+    setSelectedDate(new Date(Number(year), Number(month), Number(day)));
+  };
+
+  const handleChangeSchedule = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const [hours, minutes] = event.target.value.split(":");
+
+    console.log(hours, minutes);
+
+    selectedDate.setSeconds(0);
+
+    selectedDate.setHours(Number(hours));
+    selectedDate.setMinutes(Number(minutes));
+
+    console.log(selectedDate.toLocaleString( ));
   };
 
   useEffect(( ) => {
@@ -120,10 +143,31 @@ export default function SchedulingScreen( ) {
         <BoxStyled>
           <span style={{ display: "block", marginBottom: ".5rem", textAlign: "center", fontWeight: "bold", fontSize: "1.2rem" }}>Agendamento</span>
           
-          {loadingService ? <div className="spinner"><div style={{ padding: ".4rem", margin: ".5rem" }}></div></div> : <SelectStyled onChange={(data) => setSelectedService(data.target.value)}><option>Serviços</option>{services.map((service) => <option key={service.id} value={service.id}>{service.name}</option>)}</SelectStyled>}
-          {loadingSchedule ? <div className="spinner"><div style={{ padding: ".4rem", margin: ".5rem" }}></div></div> : <SelectStyled><option>Horários</option>{schedules.map((schedule) => <option key={schedule} value={schedule}>{schedule}</option>)}</SelectStyled>}
+          {
+            loadingService
+              ? <div className="spinner">
+                  <div style={{ padding: ".4rem", margin: ".5rem" }}></div>
+                </div>
 
-          <InputStyled onChange={({ target: { value } }) => setSelectedDate(new Date(value.replace(/-/g, "/")))} value={`${selectedDate.getFullYear( )}-${selectedDate.getMonth( ).toString( ).padStart(2, "0")}-${selectedDate.getDate( ).toString( ).padStart(2, "0")}`} style={{ width: "100%", margin: ".5rem 0" }} type="date" />
+              : <SelectStyled onChange={(data) => setSelectedService(data.target.value)}>
+                  <option>Serviços</option>
+                  {services.map((service) => <option key={service.id} value={service.id}>{service.name}</option>)}
+                </SelectStyled>}
+
+          {
+            loadingSchedule
+              ? <div className="spinner">
+                  <div style={{ padding: ".4rem", margin: ".5rem" }}></div>
+                </div>
+                
+              : <SelectStyled onChange={handleChangeSchedule}><option>Horários</option>{schedules.map((schedule) => <option key={schedule} value={schedule}>{schedule}</option>)}</SelectStyled>}
+
+          <InputStyled
+            type="date"
+            style={{ width: "100%", margin: ".5rem 0" }}
+            value={`${selectedDate.getFullYear( )}-${(selectedDate.getMonth( ) + 1).toString( ).padStart(2, "0")}-${selectedDate.getDate( ).toString( ).padStart(2, "0")}`}
+            onChange={handleChangeDate}
+          />
 
           <BoxStyled data-full="true" style={{ display: "flex", alignItems: "center", margin: ".5rem 0", width: "100%" }}>
             <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" /></svg>

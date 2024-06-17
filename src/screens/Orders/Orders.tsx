@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { OrdersStyled } from "./styles";
 
@@ -7,9 +7,9 @@ import Frame from "../../components/Frame/Frame";
 import { BoxStyled } from "../../styles/box";
 
 import OrderBox from "../../components/OrderBox/OrderBox";
-import Calendar, { dayNames, getFormatedDateFromTimestamp } from "../../components/Calendar/Calendar";
-import Blur from "../../components/Blur/Blur";
+import { dayNames, getFormatedDateFromTimestamp } from "../../components/Calendar/Calendar";
 import { apiDomain, request } from "../../contexts/globalContext";
+import Slider from "../../components/Slider/Slider";
 
 const dateAfterDays = (date: Date, days: number) => new Date(date.getFullYear( ), date.getMonth( ), date.getDate( ) + days);
 
@@ -33,12 +33,21 @@ export function DaySelector(props: { onClick(after: number): void; date: Date })
 };
 
 export default function OrdersScreen( ) {
+  const dateInput = useRef<HTMLInputElement>(null);
+
   const [loading, setLoading] = useState(false);
 
   const [orders, setOrders] = useState([ ] as any[ ]);
-  const [calendarActivated, setCalendarActivated] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(new Date( ));
+
+  const handleCalendar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const [year, month] = event.target.value.split("-");
+
+    if(!year || !month) return;
+
+    setSelectedDate(new Date(Number(year), Number(month) - 1, selectedDate.getDate( )));
+  };
   
   useEffect(( ) => {
     setLoading(true);
@@ -55,22 +64,25 @@ export default function OrdersScreen( ) {
           return;
         };
 
+        console.log(schedules)
+
         setOrders(schedules);
       });
   }, [selectedDate]);
 
+  useEffect(( ) => {
+    if(!dateInput.current) return;
+  }, [dateInput]);
+
   return (
     <Frame title="Pedidos" screen="Order">
       <OrdersStyled>
-        <Frame.SubHeader onClick={( ) => setCalendarActivated(true)}>
+        <Frame.SubHeader onClick={( ) => dateInput.current?.showPicker( )}>
           <span>{getFormatedDateFromTimestamp(selectedDate.getTime( ))}</span>
           <svg style={{ width: "1.8rem", height: "1.8rem" }} viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg>
         </Frame.SubHeader>
 
-        <DaySelector
-          date={selectedDate}
-          onClick={(after) => setSelectedDate(dateAfterDays(selectedDate, after))}
-        />
+        <Slider date={selectedDate} onClick={(day) => setSelectedDate(new Date(selectedDate.getFullYear( ), selectedDate.getMonth( ), day))} />
 
         {
           loading
@@ -79,10 +91,8 @@ export default function OrdersScreen( ) {
             {!orders.length ? <div style={{ padding: ".5rem" }}><span>Nenhum pedido</span></div> : orders.map((order) => <OrderBox {...order} key={order.id} />)}
           </div>
         }
-        
-        <Blur onClose={( ) => setCalendarActivated(false)} activated={calendarActivated}>
-          <Calendar />
-        </Blur>
+
+        <input ref={dateInput} style={{ display: "none" }} onChange={handleCalendar} type="month" />
       </OrdersStyled>
     </Frame>
   );
