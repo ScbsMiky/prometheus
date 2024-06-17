@@ -3,7 +3,7 @@ import Frame from "../../components/Frame/Frame";
 import { BoxStyled } from "../../styles/box";
 import { InputStyled } from "../../styles/input";
 import { useEffect, useState } from "react";
-import useStorage from "../../hooks/useStorage";8
+import useStorage from "../../hooks/useStorage";
 import Blur from "../../components/Blur/Blur";
 import { SelectStyled } from "../../styles/select";
 import { apiDomain, request } from "../../contexts/globalContext";
