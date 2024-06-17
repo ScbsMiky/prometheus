@@ -3,11 +3,12 @@ import Frame from "../../components/Frame/Frame";
 import { BoxStyled } from "../../styles/box";
 import { InputStyled } from "../../styles/input";
 import { useEffect, useState } from "react";
-import useStorage from "../../hooks/useStorage";8
+import useStorage from "../../hooks/useStorage";
 import Blur from "../../components/Blur/Blur";
 import { SelectStyled } from "../../styles/select";
 import { apiDomain, request } from "../../contexts/globalContext";
 import OrderBox from "../../components/OrderBox/OrderBox";
+import { useNavigate } from "react-router-dom";
 
 export default function SchedulingScreen( ) {
   const [phone] = useStorage("phone", "");
@@ -31,6 +32,8 @@ export default function SchedulingScreen( ) {
 
   const [selectedDate, setSelectedDate] = useState(new Date( ));
 
+  const navigate = useNavigate( );
+
   const handleSubmit = ( ) => {
     if(!selectedService) return;
 
@@ -41,7 +44,7 @@ export default function SchedulingScreen( ) {
       method: "POST",
       body: { date: selectedDate.toISOString( ), type: selectedService },
       headers: { token: window.localStorage.getItem("token") }
-    }).then(console.log);
+    }).then(( ) => navigate(0));
   };
 
   const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
